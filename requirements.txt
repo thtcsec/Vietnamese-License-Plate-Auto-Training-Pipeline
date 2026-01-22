@@ -1,0 +1,38 @@
+# Auto Training Pipeline Requirements
+
+# Core ML
+ultralytics>=8.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Data Generation
+numpy>=1.24.0
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+albumentations>=1.3.0
+pyyaml>=6.0
+
+# Model Tracking & Logging
+tensorboard>=2.12.0
+wandb>=0.15.0
+
+# Cloud Integration
+huggingface-hub>=0.16.0
+huggingface_datasets>=2.13.0
+
+# Utils
+tqdm>=4.66.0
+python-dotenv>=1.0.0
+click>=8.1.0
+rich>=13.0.0
+
+# Metrics & Evaluation
+scikit-learn>=1.2.0
+pandas>=1.5.0
+matplotlib>=3.6.0
+
+# Optional: Distributed training
+ray[tune]>=2.0.0
+
+# Optional: Slack notifications
+slack-sdk>=3.19.0

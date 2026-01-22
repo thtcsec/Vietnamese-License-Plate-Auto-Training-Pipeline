@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# YOLO Training outputs
+runs/
+results/
+*.pt
+*.pth
+weights/
+
+# Datasets
+data/
+datasets/
+*.jpg
+*.jpeg
+*.png
+output/
+outputs/
+
+# Logs
+logs/
+*.log
+
+# Config with credentials
+.env
+.env.local
+config.local.yaml
+
+# HuggingFace cache
+.huggingface/
+huggingface_hub_cache/
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# OS files
+Thumbs.db
+.AppleDouble
+
+# GitHub specific
+.github/workflows/logs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Node (if using frontend tools)
+node_modules/
+npm-debug.log
+
+# Artifacts from workflows
+artifacts/

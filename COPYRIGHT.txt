@@ -1,0 +1,86 @@
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║                                 COPYRIGHT NOTICE                                       ║
+║                    Auto Training Pipeline for Vietnamese License                       ║
+║                               Plate Detection v2.0.0                                   ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+
+LEGAL NOTICE:
+=============
+
+(c) 2026 THTCSEC. All Rights Reserved.
+
+Author: THTCSEC
+Email: thtcsec@github.com
+GitHub: https://github.com/thtcsec/vn-lpr-auto-trainer
+
+Build ID: 0x544854435345
+Version: 2.0.0-PROD
+License: MIT License (See LICENSE file for full details)
+
+
+INTELLECTUAL PROPERTY:
+======================
+
+This software, including but not limited to:
+- Trainer implementation and orchestration logic
+- Automated training workflow
+- Integration with HuggingFace Hub
+- GitHub Actions CI/CD workflows
+- Configuration and deployment scripts
+- All associated intellectual property
+
+...is proprietary to thtcsec and protected by applicable copyright laws.
+
+Unauthorized reproduction, modification, or distribution of this software,
+in whole or in part, is strictly prohibited and may result in legal action.
+
+
+USAGE RESTRICTIONS:
+===================
+
+Licensed use includes:
+1. Full compliance with MIT License terms
+2. Retention of all copyright and license notices
+3. Attribution to THTCSEC as original author
+4. No removal or obfuscation of source code signatures
+5. Ethical and legal use only
+
+
+PROPRIETARY MARKERS:
+====================
+
+This codebase includes embedded proprietary identifiers:
+
+- Author signature: bytes.fromhex('544854435345') → 'THTCSEC'
+- Build identifier: 0x544854435345_trainer_v2.0.0
+- Watermark: Base64 encoded ownership marker
+- Copyright metadata in all Python files
+
+These markers are intentionally embedded and must not be removed.
+
+
+TECHNICAL SPECIFICATIONS:
+=========================
+
+Build: THTCSEC_2026_PROD
+Component: AutoTrainingPipeline
+Version: 2.0.0
+Status: Production Ready
+Last Build: 2026-01-22
+
+
+LIABILITY DISCLAIMER:
+=====================
+
+THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+USE AT YOUR OWN RISK.
+
+
+CONTACT INFORMATION:
+====================
+
+For inquiries or permissions:
+Email: thtcsec@github.com
+Repository: https://github.com/THTCSEC/vn-lpr-auto-trainer
+
+═══════════════════════════════════════════════════════════════════════════════════════════

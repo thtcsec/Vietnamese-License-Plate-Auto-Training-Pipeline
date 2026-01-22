@@ -1,0 +1,40 @@
+# Auto Training Pipeline Configuration
+
+training:
+  model_name: "yolov8n"  # nano, small, medium, large, xlarge
+  epochs: 100
+  batch_size: 32
+  img_size: 640
+  device: 0  # GPU device ID
+  
+dataset:
+  auto_generate_synthetic: true
+  synthetic_count: 50000
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+  
+model:
+  pretrained: true
+  freeze_backbone: false
+  augment: true
+  
+output:
+  weights_dir: "./weights"
+  save_interval: 10  # Save every N epochs
+  publish_best: true
+  
+huggingface:
+  enabled: true
+  repo_name: "vn-lpr-dataset"
+  push_best_model: true
+  
+github:
+  auto_commit: true
+  branch: "main"
+  commit_msg: "Auto: Daily training update with {count} synthetic images"
+  
+schedule:
+  enabled: true
+  frequency: "daily"  # daily, weekly, monthly
+  time: "02:00"  # UTC time
