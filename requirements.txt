@@ -18,7 +18,7 @@ wandb>=0.15.0
 
 # Cloud Integration
 huggingface-hub>=0.16.0
-huggingface_datasets>=2.13.0
+datasets>=2.13.0
 
 # Utils
 tqdm>=4.66.0

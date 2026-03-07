@@ -313,16 +313,14 @@ tensorboard --logdir=runs/detect
 ### Link the Two Repos
 
 ```bash
-# Method 1: Direct import
-import sys
-sys.path.insert(0, '../vn-lpr-gpu-synthetic')
-from synthesis_engine import GPUSynthesisEngine
+# The trainer imports the GPU synthetic pipeline via sys.path:
+# trainer.py already does:
+#   sys.path.insert(0, '../gpu-synthetic-pipeline')
+#   from batch_generator import BatchGenerator
 
-# Method 2: Install as package
-pip install git+https://github.com/thtcsec/vn-lpr-gpu-synthetic
-
-# Method 3: Git submodule
-git submodule add https://github.com/thtcsec/vn-lpr-gpu-synthetic
+# So just ensure both repos are cloned side-by-side:
+git clone https://github.com/thtcsec/vn-lpr-auto-trainer    auto-training-pipeline/
+git clone https://github.com/thtcsec/vn-lpr-gpu-synthetic   gpu-synthetic-pipeline/
 ```
 
 ## 🐛 Troubleshooting

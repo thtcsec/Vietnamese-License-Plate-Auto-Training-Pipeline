@@ -27,6 +27,9 @@ or distribution is strictly prohibited and may result in legal action.
 
 import yaml
 import os
+import shutil
+import glob
+import subprocess
 import time
 import logging
 from pathlib import Path
@@ -107,25 +110,59 @@ class AutoTrainingPipeline:
             raise
     
     def prepare_dataset(self, data_dir: str = "./data") -> str:
-        """Prepare dataset for training"""
+        """Prepare and split dataset into YOLO-compatible train/val/test structure."""
         logger.info("Preparing dataset...")
-        
-        Path(data_dir).mkdir(exist_ok=True)
-        
+
+        # Create directory structure
+        for split in ['train', 'val', 'test']:
+            Path(f"{data_dir}/images/{split}").mkdir(parents=True, exist_ok=True)
+            Path(f"{data_dir}/labels/{split}").mkdir(parents=True, exist_ok=True)
+
+        # Collect generated images from synthetic output
+        src_dir = "../gpu-synthetic-pipeline/output"
+        images = sorted(glob.glob(f"{src_dir}/*.jpg"))
+        if not images:
+            logger.warning(f"No images found in {src_dir}")
+            return f"{data_dir}/dataset.yaml"
+
+        import random as _rng
+        _rng.shuffle(images)
+
+        # Split by configured ratios
+        n = len(images)
+        train_end = int(n * self.config['dataset']['train_split'])
+        val_end = train_end + int(n * self.config['dataset']['val_split'])
+
+        splits = {
+            'train': images[:train_end],
+            'val': images[train_end:val_end],
+            'test': images[val_end:],
+        }
+
+        for split_name, split_images in splits.items():
+            for img_path in split_images:
+                base = os.path.basename(img_path)
+                label_path = img_path.replace('.jpg', '.txt')
+                shutil.copy2(img_path, f"{data_dir}/images/{split_name}/{base}")
+                if os.path.exists(label_path):
+                    shutil.copy2(label_path, f"{data_dir}/labels/{split_name}/{base.replace('.jpg', '.txt')}")
+
+        logger.info(f"Split: train={len(splits['train'])}, val={len(splits['val'])}, test={len(splits['test'])}")
+
         # Create dataset.yaml for YOLO
         dataset_yaml = {
             'path': str(Path(data_dir).absolute()),
             'train': 'images/train',
             'val': 'images/val',
             'test': 'images/test',
-            'nc': 36,  # 10 digits + 26 letters
+            'nc': 36,
             'names': list('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ')
         }
-        
+
         yaml_path = f"{data_dir}/dataset.yaml"
         with open(yaml_path, 'w') as f:
             yaml.dump(dataset_yaml, f)
-        
+
         logger.info(f"Dataset config saved to {yaml_path}")
         return yaml_path
     
@@ -146,7 +183,7 @@ class AutoTrainingPipeline:
             save=True,
             save_period=self.config['output']['save_interval'],
             project='runs/detect',
-            name=f"vn-lpr-{datetime.now().strftime('%Y%m%d_%H%M%S')}',
+            name=f"vn-lpr-{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             augment=self.config['model']['augment'],
             flipud=0.5,
             fliplr=0.5,
@@ -209,23 +246,22 @@ class AutoTrainingPipeline:
         """Commit training results to Git"""
         if not self.config['github']['auto_commit']:
             return
-        
+
         logger.info("Committing results to Git...")
-        
+
         try:
-            os.system("git add -A")
-            
             commit_msg = self.config['github']['commit_msg'].format(
                 count=self.config['dataset']['synthetic_count'],
                 mAP=f"{metrics['mAP']:.4f}",
                 mAP50=f"{metrics['mAP50']:.4f}"
             )
-            
-            os.system(f'git commit -m "{commit_msg}"')
-            os.system("git push origin main")
-            
+
+            subprocess.run(["git", "add", "-A"], check=False)
+            subprocess.run(["git", "commit", "-m", commit_msg], check=False)
+            subprocess.run(["git", "push", "origin", "main"], check=False)
+
             logger.info("Results committed and pushed")
-            
+
         except Exception as e:
             logger.error(f"Git commit failed: {str(e)}")
     
